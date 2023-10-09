@@ -33,11 +33,26 @@ function openLog() {
     modallog.showModal();
 }
 
+function canLog(result) {
+    console.log(result[0]);
+    for (let k = 0; k < result.length; k++) {
+        console.log("reached2");
+        console.log(result[k][1].Password + "//" + pwd.value);
+        if ((result[k][1].Password == pwd.value) && (result[k][1].Username == fname.value)) {
+            return true;
+
+        }
+        return false;
+    }
+
+}
+
 function closeLog() {
     const modallog = document.querySelector('#modallog');
     let fname = document.querySelector('.fname');
     let pwd = document.querySelector('.pwd');
     let result = [];
+    loginB = false;
     $.ajax({
         method: "GET",
         url: "https://cisc472-proj-default-rtdb.firebaseio.com/Users.json",
@@ -45,11 +60,29 @@ function closeLog() {
         data: JSON,
         success: (data) => {
             for (var i in data) {
-                result.push([i, data[i]]);
+                if (data[i].Username == fname.value && data[i].Password == pwd.value) {
+                    loginB = true;
+                    console.log("reached" + loginB);
+                }
             }
-            console.log(result);
         }
     });
+    console.log("HERE");
+    if (loginB == false) {
+        document.getElementById("incorrectAlert").style.visibility = "visible";
+    } else {
+        username = fname.value;
+        password = pwd.value;
+        modallog.close();
+        document.getElementById("namereg").innerHTML = username;
+        document.getElementById("logbutton").style.visibility = "hidden";
+        document.getElementById("registerbutton").style.visibility = "hidden";
+        document.getElementById("logoutbutton").style.visibility = "visible";
+        document.getElementById("createtourney").style.visibility = "visible";
+        document.getElementById("jointourney").style.visibility = "visible";
+        document.getElementById("introbody").style.visibility = "hidden";
+        document.getElementById("incorrectAlert").style.visibility = "hidden";
+    }
     /*
     username = fname.value;
     password = pwd.value;
@@ -60,13 +93,6 @@ function closeLog() {
         "Password": password,
         "Email": "NA"
     };*/
-    document.getElementById("namereg").innerHTML = username;
-    document.getElementById("logbutton").style.visibility = "hidden";
-    document.getElementById("registerbutton").style.visibility = "hidden";
-    document.getElementById("logoutbutton").style.visibility = "visible";
-    document.getElementById("createtourney").style.visibility = "visible";
-    document.getElementById("jointourney").style.visibility = "visible";
-    document.getElementById("introbody").style.visibility = "hidden";
 }
 
 function openReg() {
@@ -117,9 +143,7 @@ function logoutHome() {
     document.getElementById("introbody").style.visibility = "visible";
 }
 
-function canLog() {
-    return true;
-}
+
 
 function openCreate() {
     const modalCreate = document.querySelector('#modalCreate');
