@@ -1,3 +1,7 @@
+.screenone {
+    visibility: visible;
+}
+
 .toppart {
     background-color: lightblue;
     position: absolute;

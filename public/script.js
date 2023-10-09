@@ -10,7 +10,7 @@ const firebaseApp = initializeApp({
 // Your web app's Firebase configuration
 
 //const db = getFirestore(app);
-
+var dbref = ref(firebaseApp);
 var pageState = 0; //0 is home, 1 is create table, 2 is join table which for 2 could be a modal asking for the name and password of the bracket and same with 1 yet after implementing those requirements fully wipes out the stuff for the modals ??
 //need to have script that after signing in gets rid of the log in and register button and then create a log out button.
 var username = " "; //document.querySelector('.namereg');
@@ -37,6 +37,20 @@ function closeLog() {
     const modallog = document.querySelector('#modallog');
     let fname = document.querySelector('.fname');
     let pwd = document.querySelector('.pwd');
+    let result = [];
+    $.ajax({
+        method: "GET",
+        url: "https://cisc472-proj-default-rtdb.firebaseio.com/Users.json",
+        contentType: "application/json",
+        data: JSON,
+        success: (data) => {
+            for (var i in data) {
+                result.push([i, data[i]]);
+            }
+            console.log(result);
+        }
+    });
+    /*
     username = fname.value;
     password = pwd.value;
     //console.log(username + " " + password);
@@ -45,9 +59,7 @@ function closeLog() {
         "Username": username,
         "Password": password,
         "Email": "NA"
-    };
-
-    $.ajax({ method: "POST", url: "https://cisc472-proj-default-rtdb.firebaseio.com/Users.json", contentType: "application/json", data: JSON.stringify(obj), success: (data) => { console.log(data) } })
+    };*/
     document.getElementById("namereg").innerHTML = username;
     document.getElementById("logbutton").style.visibility = "hidden";
     document.getElementById("registerbutton").style.visibility = "hidden";
@@ -71,10 +83,18 @@ function closeReg() {
     const modalReg = document.querySelector('#modalReg');
     let fname = document.querySelector('.fname');
     let pwd = document.querySelector('.pwd');
+    let eml = document.querySelector('.email');
     username = fname.value;
-
     password = pwd.value;
+    email = eml.value;
+    let obj = {
+        "Username": username,
+        "Password": password,
+        "Email": email
+    };
     //console.log(username + " " + password);
+    $.ajax({ method: "POST", url: "https://cisc472-proj-default-rtdb.firebaseio.com/Users.json", contentType: "application/json", data: JSON.stringify(obj), success: (data) => { console.log(data) } })
+
     modalReg.close();
     document.getElementById("namereg").innerHTML = username;
     document.getElementById("logbutton").style.visibility = "hidden";
@@ -102,11 +122,11 @@ function canLog() {
 }
 
 function openCreate() {
-    const modalReg = document.querySelector('#modalReg');
+    const modalCreate = document.querySelector('#modalCreate');
     const fname = document.querySelector('.fname');
     const pwd = document.querySelector('.pwd');
     fname.value = "";
     pwd.value = "";
     //console.log("fuck");
-    modalReg.showModal();
+    modalCreate.showModal();
 }
