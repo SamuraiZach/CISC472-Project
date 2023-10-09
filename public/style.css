@@ -34,6 +34,15 @@
     visibility: hidden;
 }
 
+.logoutbuttonT {
+    position: absolute;
+    top: 10%;
+    left: 1%;
+    width: 5%;
+    height: 50%;
+    visibility: hidden;
+}
+
 .registerbutton {
     position: absolute;
     top: 10%;

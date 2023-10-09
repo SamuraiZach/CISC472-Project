@@ -8,7 +8,21 @@ const firebaseApp = initializeApp({
     appId: "1:988259633725:web:85f4540d401263bfd3f854"
 });
 // Your web app's Firebase configuration
+/*
+const signInWithGoogleButton = document.getElementById('signInWithGoogle');
+const signInWithGoogle = () => {
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
 
+    auth.signInWithPopup(googleProvider)
+        .then(() => {
+            window.location.assign('./profile');
+        })
+        .catch(error => {
+            console.error(error);
+        })
+}
+
+signInWithGoogleButton.addEventListener('click', signInWithGoogle);*/
 //const db = getFirestore(app);
 var dbref = ref(firebaseApp);
 var pageState = 0; //0 is home, 1 is create table, 2 is join table which for 2 could be a modal asking for the name and password of the bracket and same with 1 yet after implementing those requirements fully wipes out the stuff for the modals ??
@@ -119,10 +133,12 @@ function closeLog() {
 
 function openReg() {
     const modalReg = document.querySelector('#modalReg');
-    const fname = document.querySelector('.fname');
-    const pwd = document.querySelector('.pwd');
+    const fname = document.querySelector('.fnameR');
+    const pwd = document.querySelector('.pwdR');
+    const email = document.querySelector('.email');
     fname.value = "";
     pwd.value = "";
+    email.value = "";
     //console.log("fuck");
     modalReg.showModal();
 }
@@ -156,6 +172,7 @@ function closeReg() {
 function logoutHome() {
     username = "";
     password = "";
+    email = "";
     document.getElementById("namereg").innerHTML = username;
     document.getElementById("logbutton").style.visibility = "visible";
     document.getElementById("registerbutton").style.visibility = "visible";
@@ -169,10 +186,19 @@ function logoutHome() {
 
 function openCreate() {
     const modalCreate = document.querySelector('#modalCreate');
-    const fname = document.querySelector('.fname');
-    const pwd = document.querySelector('.pwd');
-    fname.value = "";
-    pwd.value = "";
+    const tname = document.querySelector('.tname');
+    const gname = document.querySelector('.gname');
+    const nump = document.querySelector('.nump');
+    const gpwd = document.querySelector('.gpwd');
+    tname.value = "";
+    gname.value = "";
+    nump.value = "";
+    gpwd.value = "";
     //console.log("fuck");
     modalCreate.showModal();
+}
+
+function closeCreate() {
+
+    modalCreate.close();
 }
