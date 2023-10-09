@@ -47,8 +47,8 @@
             <h1 id="introbody" style="position:absolute; left: 25%; top: 25%;text-align:center; visibility: visible;">Welcome to the tournament! Please sign in above to get started!</h1>
             <button id="createtourney" class="createtourney" onclick="openCreate()">CREATE TOURNEY HERE!</button>
             <dialog class="modalCreate" id="modalCreate">
-                <h1 style="text-align: center;">Welcome!</h1>
-                <label for="tname">Name of tourney:</label>
+                <h1 style="text-align: center;">Create Your Tournament!</h1>
+                <label for="tname">Name of Tournament:</label>
                 <input type="text" id="tname" name="tname" class="tname" value=""></input>
                 <label for="gname">Name of Game:</label>
                 <input type="text" id="gname" name="gname" class="gname" value=""></input>
@@ -57,6 +57,14 @@
                 <button class="closeCreate" onclick="closeCreate()">Create!</button>
             </dialog>
             <button id="jointourney" class="jointourney">JOIN A TOURNEY!</button>
+            <dialog class="modalJoin" id="modalJoin">
+                <h1 style="text-align: center;">Join A Tournament!</h1>
+                <label for="tname">Name of Tournament:</label>
+                <input type="text" id="tname" name="tname" class="tname" value=""></input>
+                <label for="gpwd">Password (blank if none):</label>
+                <input type="password" id="gpwd" name="gpwd" class="gpwd" value=""></input>
+                <button class="closeJoin" onclick="closeJoin()">Join!</button>
+            </dialog>
         </div>
     </div>
     <div class="screentwo"></div>

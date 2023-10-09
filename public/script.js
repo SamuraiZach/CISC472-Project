@@ -16,11 +16,21 @@ var pageState = 0; //0 is home, 1 is create table, 2 is join table which for 2 c
 var username = " "; //document.querySelector('.namereg');
 var password = " ";
 var email = " ";
+var loginB = false;
 //const logModal = document.querySelector('.logbutton');
 var fname = document.querySelector('.fname');
 //var google_provider = new db.auth.GoogleAuthProvider();
 //db.auth().onAuthStateCanged(user => {});
 //const closelogModal = document.querySelector('.closelog');
+
+var google_provider = new firebase.auth.GoogleAuthProvider();
+firebase.auth().onAuthStateChanged(user => {
+    if (!!user) {
+        startApp(user);
+    } else {
+        renderLogin();
+    }
+});
 
 function openLog() {
     //app.auth().signInWithRedirect(google_provider);
@@ -30,6 +40,7 @@ function openLog() {
     fname.value = "";
     pwd.value = "";
     //console.log("fuck");
+    document.getElementById("incorrectAlert").style.visibility = "hidden";
     modallog.showModal();
 }
 
@@ -61,13 +72,24 @@ function closeLog() {
         success: (data) => {
             for (var i in data) {
                 if (data[i].Username == fname.value && data[i].Password == pwd.value) {
-                    loginB = true;
-                    console.log("reached" + loginB);
+                    username = fname.value;
+                    password = pwd.value;
+                    modallog.close();
+                    document.getElementById("namereg").innerHTML = username;
+                    document.getElementById("logbutton").style.visibility = "hidden";
+                    document.getElementById("registerbutton").style.visibility = "hidden";
+                    document.getElementById("logoutbutton").style.visibility = "visible";
+                    document.getElementById("createtourney").style.visibility = "visible";
+                    document.getElementById("jointourney").style.visibility = "visible";
+                    document.getElementById("introbody").style.visibility = "hidden";
+                    document.getElementById("incorrectAlert").style.visibility = "hidden";
+                } else {
+                    document.getElementById("incorrectAlert").style.visibility = "visible";
                 }
             }
         }
     });
-    console.log("HERE");
+    /*console.log("HERE");
     if (loginB == false) {
         document.getElementById("incorrectAlert").style.visibility = "visible";
     } else {
@@ -82,7 +104,7 @@ function closeLog() {
         document.getElementById("jointourney").style.visibility = "visible";
         document.getElementById("introbody").style.visibility = "hidden";
         document.getElementById("incorrectAlert").style.visibility = "hidden";
-    }
+    }*/
     /*
     username = fname.value;
     password = pwd.value;
